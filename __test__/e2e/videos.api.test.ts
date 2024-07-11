@@ -1,5 +1,5 @@
 import request from 'supertest'
-import { app } from '../../src/types/app'
+import { app } from '../../app'
 
 describe('videos', () => {
 	beforeAll(async () => {

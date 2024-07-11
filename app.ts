@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express'
-import { getVideoRoutes } from '../routes/videos'
-import { db } from '../repositories/VideosRepository'
-import { getTestRouter } from '../routes/tests'
+import { getVideoRoutes } from './src/routes/videos'
+import { db } from './src/repositories/VideosRepository'
+import { getTestRouter } from './src/routes/tests'
 
 export const app = express()
 
