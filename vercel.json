@@ -1,0 +1,6 @@
+{
+	"version": 2,
+	"name": "VIDEOS",
+	"builds": [{ "src": "dist/types/app.js", "use": "@vercel/node" }],
+	"routes": [{ "src": "/(.*)", "dest": "dist/types/app.js" }]
+}
