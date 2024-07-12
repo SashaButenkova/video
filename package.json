@@ -4,6 +4,7 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "jest",
+		"dev": "nodemon .\\dist\\index.js",
 		"watch": "tsc -w",
 		"jest": "jest -i",
 		"jest:coverage": "jest -i --coverage"
