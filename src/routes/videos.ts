@@ -75,8 +75,8 @@ export const getVideoRoutes = (db: DBType) => {
 				author: req.body.author,
 				canBeDownloaded: true,
 				minAgeRestriction: null,
-				createdAt: '2024-07-10T17:22:00.900Z',
-				publicationDate: '2024-07-10T17:22:00.900Z',
+				createdAt: '2024-07-11T17:22:00.900Z',
+				publicationDate: '2024-07-11T17:22:00.900Z',
 				availableResolutions: req.body.availableResolutions,
 			}
 
