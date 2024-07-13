@@ -65,7 +65,14 @@ export const getVideoRoutes = (db: DBType) => {
 	router.post(
 		'/',
 		(req: RequestWithBody<CreateVideoModel>, res: Response<VideoViewModel>) => {
-			const createdAt = new Date()
+			// const createdAt = new Date()
+
+			const createdAt = function () {
+				const date = new Date()
+				date.setUTCDate(date.getUTCDate() + 1)
+				return date.toISOString()
+			}
+
 			const publicationDates = function () {
 				const date = new Date()
 				date.setUTCDate(date.getUTCDate() + 1)
@@ -81,7 +88,7 @@ export const getVideoRoutes = (db: DBType) => {
 				author: req.body.author,
 				canBeDownloaded: true,
 				minAgeRestriction: null,
-				createdAt: createdAt.toISOString(),
+				createdAt: createdAt(),
 				publicationDate: publicationDates(),
 				availableResolutions: req.body.availableResolutions,
 			}
