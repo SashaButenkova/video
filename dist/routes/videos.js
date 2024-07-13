@@ -78,6 +78,10 @@ const getVideoRoutes = (db) => {
         db.videos.push(NewVideo);
         res.status(201).json(getVideoViewModel(NewVideo));
     });
+    router.delete('/testing/all-data', (req, res) => {
+        db.videos.length = 0;
+        res.sendStatus(204);
+    });
     router.delete('/:id', (req, res) => {
         db.videos = db.videos.filter(v => v.id !== +req.params.id);
         let error = {
@@ -178,10 +182,6 @@ const getVideoRoutes = (db) => {
                 ? publicationDate
                 : video.publicationDate, availableResolutions });
         db.videos.splice(videoIndex, 1, updateItems);
-        res.sendStatus(204);
-    });
-    router.delete('/testing/all-data', (req, res) => {
-        db.videos.length = 0;
         res.sendStatus(204);
     });
     return router;
