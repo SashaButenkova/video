@@ -74,10 +74,6 @@ export const getVideoRoutes = (db: DBType) => {
 	router.post(
 		'/',
 		(req: RequestWithBody<CreateVideoModel>, res: Response<VideoViewModel>) => {
-			let error: errorType = {
-				errorsMessages: [],
-			}
-
 			const createdAt = new Date()
 
 			const publicationDates = function () {
@@ -87,10 +83,8 @@ export const getVideoRoutes = (db: DBType) => {
 			}
 
 			if (!req.body.title) {
-				error.errorsMessages.push({
-					message: 'Incorrect title',
-					field: 'title',
-				})
+				response.status(400).send('bad request')
+				return
 			}
 
 			const NewVideo: VideoType = {
@@ -122,7 +116,6 @@ export const getVideoRoutes = (db: DBType) => {
 				message: 'Incorrect title',
 				field: 'title',
 			})
-			return
 		}
 
 		res.sendStatus(204)
@@ -260,10 +253,13 @@ export const getVideoRoutes = (db: DBType) => {
 		}
 	)
 
-	router.delete('/testing/all-data', (req: Request, res: Response) => {
-		db.videos.length = 0
-		res.sendStatus(204)
-	})
+	router.delete(
+		'/testing/all-data',
+		(req: RequestWithParams<URIParamsVideosModel>, res) => {
+			db.videos.length = 0
+			res.sendStatus(204)
+		}
+	)
 
 	return router
 }
