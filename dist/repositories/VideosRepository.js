@@ -40,20 +40,19 @@ exports.VideosRepository = {
         let FindVideo = exports.db.videos.find(v => v.id == id);
         return FindVideo;
     },
-    postVideo(title, author, availableResolutions) {
-        const createdAt = new Date();
-        const publicationDates = new Date();
-        publicationDates.setDate(createdAt.getDate() + 1);
-        let NewVideo = {
-            id: +new Date(),
-            createdAt: createdAt.toISOString(),
-            publicationDate: publicationDates.toISOString(),
-            canBeDownloaded: false,
-            minAgeRestriction: null,
-            title,
-            author,
-            availableResolutions,
-        };
-        return NewVideo;
-    },
+    // postVideo(title: string, author: string, availableResolutions: string[]) {
+    // 	const createdAt = new Date()
+    // 	const publicationDates = new Date()
+    // 	publicationDates.setDate(createdAt.getDate())
+    // let NewVideo = {
+    // 	id: +new Date(),
+    // 	createdAt: createdAt.toISOString(),
+    // 	publicationDate: publicationDates.toISOString(),
+    // 	canBeDownloaded: false,
+    // 	minAgeRestriction: null,
+    // 	title,
+    // 	author,
+    // 	availableResolutions,
+    // }
+    // return NewVideo
 };
