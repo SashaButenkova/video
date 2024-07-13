@@ -49,7 +49,6 @@ const getVideoRoutes = (db) => {
                 message: 'Incorrect title',
                 field: 'title',
             });
-            return;
         }
         const NewVideo = {
             id: +new Date(),

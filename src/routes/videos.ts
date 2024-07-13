@@ -91,7 +91,6 @@ export const getVideoRoutes = (db: DBType) => {
 					message: 'Incorrect title',
 					field: 'title',
 				})
-				return
 			}
 
 			const NewVideo: VideoType = {
