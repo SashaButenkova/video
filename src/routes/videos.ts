@@ -66,7 +66,11 @@ export const getVideoRoutes = (db: DBType) => {
 		'/',
 		(req: RequestWithBody<CreateVideoModel>, res: Response<VideoViewModel>) => {
 			const createdAt = new Date()
-			const publicationDates = new Date()
+			const publicationDates = function () {
+				const date = new Date()
+				date.setUTCDate(date.getUTCDate() + 1)
+				return date.toISOString()
+			}
 			if (!req.body.title) {
 				response.status(400).send('bad request')
 				return
@@ -78,7 +82,7 @@ export const getVideoRoutes = (db: DBType) => {
 				canBeDownloaded: true,
 				minAgeRestriction: null,
 				createdAt: createdAt.toISOString(),
-				publicationDate: publicationDates.toISOString(),
+				publicationDate: publicationDates(),
 				availableResolutions: req.body.availableResolutions,
 			}
 

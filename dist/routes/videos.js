@@ -56,7 +56,11 @@ const getVideoRoutes = (db) => {
     });
     router.post('/', (req, res) => {
         const createdAt = new Date();
-        const publicationDates = new Date();
+        const publicationDates = function () {
+            const date = new Date();
+            date.setUTCDate(date.getUTCDate() + 1);
+            return date.toISOString();
+        };
         if (!req.body.title) {
             express_1.response.status(400).send('bad request');
             return;
@@ -68,7 +72,7 @@ const getVideoRoutes = (db) => {
             canBeDownloaded: true,
             minAgeRestriction: null,
             createdAt: createdAt.toISOString(),
-            publicationDate: publicationDates.toISOString(),
+            publicationDate: publicationDates(),
             availableResolutions: req.body.availableResolutions,
         };
         db.videos.push(NewVideo);
