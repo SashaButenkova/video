@@ -30,6 +30,15 @@ const getVideoViewModel = (dbVideo: VideoType): VideoViewModel => {
 export const getVideoRoutes = (db: DBType) => {
 	const router = express.Router()
 
+	type errorMessageType = {
+		field: string
+		message: string
+	}
+
+	type errorType = {
+		errorsMessages: errorMessageType[]
+	}
+
 	router.get(
 		'/',
 		(
@@ -65,23 +74,26 @@ export const getVideoRoutes = (db: DBType) => {
 	router.post(
 		'/',
 		(req: RequestWithBody<CreateVideoModel>, res: Response<VideoViewModel>) => {
-			const createdAt = new Date()
+			let error: errorType = {
+				errorsMessages: [],
+			}
 
-			// const createdAt = function () {
-			// 	const date = new Date()
-			// 	date.setUTCDate(date.getUTCDate() + 1)
-			// 	return date.toISOString()
-			// }
+			const createdAt = new Date()
 
 			const publicationDates = function () {
 				const date = new Date()
 				date.setUTCDate(date.getUTCDate() + 1)
 				return date.toISOString()
 			}
+
 			if (!req.body.title) {
-				response.status(400).send('bad request')
+				error.errorsMessages.push({
+					message: 'Incorrect title',
+					field: 'title',
+				})
 				return
 			}
+
 			const NewVideo: VideoType = {
 				id: +new Date(),
 				title: req.body.title,
@@ -102,22 +114,20 @@ export const getVideoRoutes = (db: DBType) => {
 	router.delete('/:id', (req: RequestWithParams<URIParamsVideosModel>, res) => {
 		db.videos = db.videos.filter(v => v.id !== +req.params.id)
 
+		let error: errorType = {
+			errorsMessages: [],
+		}
+
 		if (!req.params.id) {
-			response.status(404).send('not found')
+			error.errorsMessages.push({
+				message: 'Incorrect title',
+				field: 'title',
+			})
 			return
 		}
 
 		res.sendStatus(204)
 	})
-
-	type errorMessageType = {
-		field: string
-		message: string
-	}
-
-	type errorType = {
-		errorsMessages: errorMessageType[]
-	}
 
 	router.put(
 		'/:id',
@@ -125,23 +135,6 @@ export const getVideoRoutes = (db: DBType) => {
 			req: RequestWithParamsAndBody<URIParamsVideosModel, UpdateVideoModel>,
 			res
 		) => {
-			// if (!req.body.title) {
-			// 	response.status(400).send('bad request')
-			// 	return
-			// }
-
-			// const foundVideo = db.videos.find(v => v.id === +req.params.id)
-
-			// if (!foundVideo) {
-			// 	res.sendStatus(404)
-			// 	return
-			// }
-			//title: req.body.title
-
-			// res.send(foundVideo)
-			// res.status(204)
-			// return
-
 			const videos: VideoType | undefined = db.videos.find(
 				v => v.id === +req.params.id
 			)

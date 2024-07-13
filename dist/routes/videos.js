@@ -1,30 +1,10 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getVideoRoutes = void 0;
-const express_1 = __importStar(require("express"));
+const express_1 = __importDefault(require("express"));
 const getVideoViewModel = (dbVideo) => {
     return {
         id: dbVideo.id,
@@ -55,19 +35,20 @@ const getVideoRoutes = (db) => {
         res.json(getVideoViewModel(foundVideo));
     });
     router.post('/', (req, res) => {
+        let error = {
+            errorsMessages: [],
+        };
         const createdAt = new Date();
-        // const createdAt = function () {
-        // 	const date = new Date()
-        // 	date.setUTCDate(date.getUTCDate() + 1)
-        // 	return date.toISOString()
-        // }
         const publicationDates = function () {
             const date = new Date();
             date.setUTCDate(date.getUTCDate() + 1);
             return date.toISOString();
         };
         if (!req.body.title) {
-            express_1.response.status(400).send('bad request');
+            error.errorsMessages.push({
+                message: 'Incorrect title',
+                field: 'title',
+            });
             return;
         }
         const NewVideo = {
@@ -85,26 +66,19 @@ const getVideoRoutes = (db) => {
     });
     router.delete('/:id', (req, res) => {
         db.videos = db.videos.filter(v => v.id !== +req.params.id);
+        let error = {
+            errorsMessages: [],
+        };
         if (!req.params.id) {
-            express_1.response.status(404).send('not found');
+            error.errorsMessages.push({
+                message: 'Incorrect title',
+                field: 'title',
+            });
             return;
         }
         res.sendStatus(204);
     });
     router.put('/:id', (req, res) => {
-        // if (!req.body.title) {
-        // 	response.status(400).send('bad request')
-        // 	return
-        // }
-        // const foundVideo = db.videos.find(v => v.id === +req.params.id)
-        // if (!foundVideo) {
-        // 	res.sendStatus(404)
-        // 	return
-        // }
-        //title: req.body.title
-        // res.send(foundVideo)
-        // res.status(204)
-        // return
         const videos = db.videos.find(v => v.id === +req.params.id);
         if (!videos) {
             res.sendStatus(404);
