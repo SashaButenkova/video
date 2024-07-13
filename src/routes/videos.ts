@@ -65,6 +65,8 @@ export const getVideoRoutes = (db: DBType) => {
 	router.post(
 		'/',
 		(req: RequestWithBody<CreateVideoModel>, res: Response<VideoViewModel>) => {
+			const createdAt = new Date()
+			const publicationDates = new Date()
 			if (!req.body.title) {
 				res.sendStatus(400)
 				return
@@ -75,8 +77,8 @@ export const getVideoRoutes = (db: DBType) => {
 				author: req.body.author,
 				canBeDownloaded: true,
 				minAgeRestriction: null,
-				createdAt: '2024-07-14T17:22:00.900Z',
-				publicationDate: '2024-07-14T17:22:00.900Z',
+				createdAt: createdAt.toISOString(),
+				publicationDate: publicationDates.toISOString(),
 				availableResolutions: req.body.availableResolutions,
 			}
 
