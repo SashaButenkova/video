@@ -74,7 +74,7 @@ const getVideoRoutes = (db) => {
             id: +new Date(),
             title: req.body.title,
             author: req.body.author,
-            canBeDownloaded: true,
+            canBeDownloaded: false,
             minAgeRestriction: null,
             createdAt: createdAt.toISOString(),
             publicationDate: publicationDates(),
