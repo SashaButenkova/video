@@ -1,4 +1,5 @@
 import { AvailableResolutions } from '../repositories/VideosRepository'
+import { VideoViewModel } from './VideoViewModel'
 
 export type UpdateVideoModel = {
 	title: string
