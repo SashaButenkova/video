@@ -104,14 +104,6 @@ export const getVideoRoutes = (db: DBType) => {
 		}
 	)
 
-	router.delete(
-		'/testing/all-data',
-		(req: RequestWithParams<URIParamsVideosModel>, res) => {
-			db.videos.length = 0
-			res.sendStatus(204)
-		}
-	)
-
 	router.delete('/:id', (req: RequestWithParams<URIParamsVideosModel>, res) => {
 		db.videos = db.videos.filter(v => v.id !== +req.params.id)
 

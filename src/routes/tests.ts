@@ -1,10 +1,10 @@
 import express, { Request, Response, Express } from 'express'
 import { DBType } from '../repositories/VideosRepository'
 
-export const getTestRouter = (db: DBType) => {
+export const getTestingAllDataRouter = (db: DBType) => {
 	const router = express.Router()
 
-	router.delete('/data', (req, res) => {
+	router.delete('/all-data', (req, res) => {
 		db.videos = []
 		res.sendStatus(204)
 	})

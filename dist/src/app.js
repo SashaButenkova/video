@@ -16,4 +16,4 @@ exports.app = (0, express_1.default)();
 exports.jsonBodyMiddleware = express_1.default.json();
 exports.app.use(exports.jsonBodyMiddleware);
 exports.app.use('/videos', (0, videos_1.getVideoRoutes)(VideosRepository_1.db));
-exports.app.use('/__test__', (0, tests_1.getTestRouter)(VideosRepository_1.db));
+exports.app.use('/testing', (0, tests_1.getTestingAllDataRouter)(VideosRepository_1.db));
